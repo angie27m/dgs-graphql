@@ -1,0 +1,5 @@
+type Stock {
+    symbol: String!
+    price: NonNegativeInt!
+    lastTradeDateTime: DateTime!
+}

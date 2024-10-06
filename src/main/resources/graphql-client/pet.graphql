@@ -1,0 +1,31 @@
+"""This is a sample documentation on PetFoodType"""
+enum PetFoodType {
+    HERBIVORE, CARNIVORE, OMNIVORE
+}
+
+interface Pet {
+    """Pet's name, make it <strong>cute</strong>"""
+    name: String!
+    food: PetFoodType
+    breed: String
+}
+
+"""Dog implements pet"""
+type Dog implements Pet {
+    name: String!
+    food: PetFoodType
+    breed: String
+    size: String
+    coatLength: String
+}
+
+type Cat implements Pet {
+    name: String!
+    food: PetFoodType
+    breed: String
+    registry: String
+}
+
+input PetFilter {
+    petType: String
+}

@@ -29,6 +29,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'net.datafaker:datafaker:1.7.0'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 dependencyManagement {
