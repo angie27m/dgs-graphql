@@ -24,14 +24,22 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter'
+	implementation 'com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation(platform('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0'))
+	implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter'
+	implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-scalars'
 
 	implementation 'net.datafaker:datafaker:1.7.0'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
+	implementation 'org.ocpsoft.prettytime:prettytime:5.0.6.Final'
+	implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+
+	runtimeOnly 'org.postgresql:postgresql'
 }
 
 dependencyManagement {
@@ -44,6 +52,12 @@ generateJava {
 	schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
 	packageName = 'com.dgs.graphql.codegen'
 	generateClient = true
+	typeMapping = [
+			"Date"              : "java.time.LocalDate",
+			"NonNegativeInt"    : "java.lang.Integer",
+			"Url"               : "java.net.URL",
+			"DateTime"          : "java.time.OffsetDateTime"
+	]
 }
 
 tasks.named('test') {
