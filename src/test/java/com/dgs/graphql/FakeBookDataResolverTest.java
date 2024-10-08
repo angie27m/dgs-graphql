@@ -31,10 +31,13 @@ public class FakeBookDataResolverTest {
     @Test
     void testAllBooks() {
         var graphqlQuery = new BooksGraphQLQuery.Builder().build();
-        var projectionRoot = new BooksProjectionRoot().title()
-                .author().name()
-                .originCountry();
-
+        var projectionRoot = ((BooksProjectionRoot) new BooksProjectionRoot()
+                .title()
+                .author()
+                .name()
+                .originCountry()
+                .getRoot())
+                .released().year();
         var graphqlQueryRequest = new GraphQLQueryRequest(graphqlQuery, projectionRoot).serialize();
 
         List<String> titles = dgsQueryExecutor.executeAndExtractJsonPath(
@@ -51,6 +54,15 @@ public class FakeBookDataResolverTest {
 
         assertNotNull(authors);
         assertEquals(titles.size(), authors.size());
+
+        List<Integer> releaseYears = dgsQueryExecutor.executeAndExtractJsonPathAsObject(
+                graphqlQueryRequest, "data.books[*].released.year",
+                new TypeRef<List<Integer>>() {
+                }
+        );
+
+        assertNotNull(releaseYears);
+        assertEquals(titles.size(), releaseYears.size());
     }
 
     @Test
@@ -62,9 +74,11 @@ public class FakeBookDataResolverTest {
                 .year(expectedYear)
                 .printedEdition(expectedPrintedEdition)
                 .build();
+
         var graphqlQuery = BooksByReleasedGraphQLQuery.newRequest()
                 .releasedInput(releaseHistoryInput)
                 .build();
+
         var projectionRoot = new BooksProjectionRoot()
                 .released().year().printedEdition();
 
