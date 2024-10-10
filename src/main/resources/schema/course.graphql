@@ -14,7 +14,7 @@ type Query {
     pets(petFilter: PetFilter): [Pet]
     smartSearch(keyword: String): [SmartSearchResult]
     additionalOnRequest: String
-
+    """ Queries for Problemz app """
     me: User!
     problemLatestList: [Problem!]
     itemSearch(filter: SearchItemFilter): [SearchableItem]
@@ -24,8 +24,9 @@ type Query {
 type Mutation {
     addHello(helloInput: HelloInput!): Int
     replaceHelloText(helloInput: HelloInput!): [Hello]
-    #    replaceHelloText(number: Int!, newText: String!): [Hello]
     deleteHello(number: Int!): Int
+
+    """ Mutations for Problemz app """
     userCreate(user: UserCreateInput!): UserResponse!
     userLogin(user: UserLoginInput!): UserResponse!
     userActivation(user: UserActivationInput!): UserActivationResponse!
